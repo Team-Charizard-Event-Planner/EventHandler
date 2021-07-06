@@ -1,0 +1,28 @@
+{
+  "name": "eventhandler",
+  "version": "1.0.0",
+  "description": "This project is for planning parties where everyone brings stuff.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nomtomnom/EventHandler.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nomtomnom/EventHandler/issues"
+  },
+  "homepage": "https://github.com/nomtomnom/EventHandler#readme",
+  "dependencies": {
+    "@material-ui/core": "^4.12.0",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "jest": "^27.0.6",
+    "react": "^17.0.2",
+    "react-router": "^5.2.0"
+  }
+}

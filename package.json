@@ -1,0 +1,50 @@
+{
+  "name": "eventhandler",
+  "version": "1.0.0",
+  "description": "This project is for planning parties where everyone brings stuff.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "NODE_ENV=production node server/server.js",
+    "build": "NODE_ENV=production webpack",
+    "dev": "NODE_ENV=development concurrently \"nodemon server/start.js\" \"webpack serve --open\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nomtomnom/EventHandler.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nomtomnom/EventHandler/issues"
+  },
+  "homepage": "https://github.com/nomtomnom/EventHandler#readme",
+  "dependencies": {
+    "@material-ui/core": "^4.12.0",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "pg": "^8.6.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router": "^5.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "@babel/preset-react": "^7.14.5",
+    "babel-loader": "^8.2.2",
+    "concurrently": "^6.2.0",
+    "css-loader": "^5.2.6",
+    "eslint": "^7.30.0",
+    "eslint-plugin-react": "^7.24.0",
+    "jest": "^27.0.6",
+    "mini-css-extract-plugin": "^2.1.0",
+    "nodemon": "^2.0.9",
+    "react-hot-loader": "^4.13.0",
+    "style-loader": "^3.0.0",
+    "webpack": "^5.43.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
+  }
+}

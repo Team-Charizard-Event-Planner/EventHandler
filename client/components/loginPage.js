@@ -1,9 +1,9 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { Button, TextField } from "@material-ui/core";
 
 const LoginPage = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -12,7 +12,31 @@ const LoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("hello");
+    fetch('/user/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        //need redux store
+      })
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      if(data === 'incorrect username/password') console.log('incorrect password')
+      else {
+        fetch('/user/verify', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+
+          })
+        })
+      }
+    })
+    .catch((err) => console.log(err));
   };
 
   return (
@@ -20,20 +44,20 @@ const LoginPage = () => {
       <form
         id="LoginForm"
         method="POST"
-        action="/api/login"
+        action="/api/user/login"
         onSubmit={handleLogin}
       >
-        <TextField label="username" name="username" onChange={handleSubmit} />
+      {/* need to add in action here for redux */}
+        <TextField label="email" name="email" onChange={handleSubmit} />
         <br></br>
+      {/* need to add in action here for redux */}
         <TextField label="password" name="password" onChange={handleSubmit} />
         <br></br>
       </form>
-      {/* this should be log in */}
       <Button
-        type="submit"
-        onClick={() => dispatch({ type: "increment-counter" })}
+        type="submit" variant="contained" color="secondary"
       >
-        Increment Counter
+        Login
       </Button>
     </div>
   );

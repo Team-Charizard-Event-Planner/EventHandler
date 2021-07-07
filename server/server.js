@@ -3,6 +3,9 @@ const path = require('path');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
+const authRouter = require('./routers/auth');
+const eventRouter = require('./routers/event');
+
 const app = express();
 const PORT = 3000;
 
@@ -15,14 +18,13 @@ app.use(cookieParser());
 // routes
 // static routes
 
-// other routes
 // /auth for user authentication pathways
-
+app.use('/auth', authRouter);
 
 // /event for event fetching & creation
+app.use('/event', eventRouter);
 
-
-// /item for item fetching & creation
+// should event include item? should item be separate?
 
 
 // serve HTML

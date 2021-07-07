@@ -14,6 +14,7 @@ const SignupPage = () => {
         method="POST"
         action="/api/signup"
         onSubmit={handleSubmit}
+        
       ></form>
     </div>
   );

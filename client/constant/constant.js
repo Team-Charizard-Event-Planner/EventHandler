@@ -9,3 +9,5 @@ export const EDIT_DATE = "EDIT_DATE";
 export const ADD_ATTENDEE = "ADD_ATTENDEE";
 export const DELETE_ATTENDEE = "DELETE_ATTENDEE";
 export const ADD_EMAIL = "ADD_EMAIL";
+export const LOGIN_CHECK = "LOGIN_CHECK";
+export const IS_CLAIMED = "IS_CLAIMED";

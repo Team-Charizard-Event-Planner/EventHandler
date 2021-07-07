@@ -9,3 +9,8 @@ export const addEmail = (email) => ({
   type: types.ADD_EMAIL,
   payload: email,
 });
+
+export const isLoggedIn = (loggedIn) => ({
+  type: types.LOGIN_CHECK,
+  payload: loggedIn,
+})

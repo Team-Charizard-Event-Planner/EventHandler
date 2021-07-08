@@ -6,9 +6,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 
-// (title, date, description, creator_id)
 const CreateNewEventPopUp = () => {
   const [open, setOpen] = React.useState(false);
   const userId = useSelector((state) => state.users.userId);

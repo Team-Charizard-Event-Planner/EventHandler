@@ -1,31 +1,49 @@
 import React from "react";
 import { Checkbox } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
+import { Button } from "@material-ui/core";
 
 const ItemList = () => {
   const dispatch = useDispatch();
 
   const isClaimed = useSelector((state) => state.events.isClaimed);
-  const items = useSelector((state) => state.events.itemArray);
+  const userObj = useSelector((state) => state.events.isClaimed);
+  const itemsArray = useSelector((state) => state.events.itemArray);
+  const items = itemsArray.map(element => {<ul id={element._id} className="item">{element.itemName} </ul>
+  })
+  const eventId = useSelector((state) => state.events.eventIndexAndId[1]);
 
-  const itemsArray = (array) => {
-    for (let i = 0; i < array.length; i++)
-      // will need to access the id as the key and object value
-      items.push(
-        <ul id={array[i]._id} className="item">
-          {array[i]}
-        </ul>
-      );
-  };
+  // const query = `SELECT i.*, u.username
+  // FROM items i
+  // LEFT OUTER JOIN users u ON i.user_id = u._id
+  // WHERE event_id = $1;`;
 
+  useEffect(() =>{
+    fetch(`item/${eventId}`)
+    .then((res) => {
+      console.log('what is res', res)
+      return res.json();
+    })
+    then((data) => {
+      console.log('what is data', data)
+      dispatch({ type: })
+    })
+  })
+  // think i will need a fetch request to get all attendess here
+
+  // changed isClaimed to refer to user id rather than boolean
   const handleClaim = () => {
-    isClaimed
-      ? dispatch({ type: "IS_CLAIMED", payload: false })
-      : dispatch({ type: "IS_CLAIMED", payload: true });
+    isClaimed !== null
+      ? dispatch({ type: "IS_CLAIMED", payload: null })
+      : dispatch({ type: "IS_CLAIMED", payload: userObj._id });
   };
+
   const handleDelete = (e) => {
+    e.preventDefault();
     const removeId = e.target.id;
+    // don't think this is needed since it's done in state
     document.getElementById(removeId).remove();
+    dispatch({ type: "DELETE_ITEM", payload: removeId });
     fetch("/item/delete", {
       method: "POST",
       headers: {
@@ -39,10 +57,13 @@ const ItemList = () => {
 
   return (
     <div>
+      <h3>Item List</h3>
       <ul className="item">
-        {itemsArray}
-        <Checkbox onChange={handleClaim} />
-        <button onClick={handleDelete}>x</button>
+        {items}
+        {/* need to incorporate cost */}
+        <Button variant="contained" color="secondary" onClick={handleDelete}>
+          x
+        </Button>
       </ul>
     </div>
   );

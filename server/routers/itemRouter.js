@@ -19,24 +19,19 @@ router.post('/',
   }
 );
 
-// CLAIM ITEM ("edit")
-router.put('/claim',
+// EDIT
+router.put('/',
+  itemController.edit,
   (req, res) => {
-    return res.status(200).json('success');
+    return res.status(200).json(res.locals.item);
   }
 );
 
 // REMOVE ITEM
 router.delete('/',
+  itemController.delete,
   (req, res) => {
-    return res.status(200).json('success');
-  }
-);
-
-// EDIT ITEM? (ie name, cost?)
-router.put('/edit',
-  (req, res) => {
-    return res.status(200).json('success');
+    return res.status(200).json(res.locals.item);
   }
 );
 

@@ -32,7 +32,7 @@ itemController.create = (req, res, next) => {
   const query = `INSERT INTO items
   (item_name, event_id)
   VALUES ($1, $2)
-  RETURNING _id, item_name, event_id;`;
+  RETURNING *;`;
 
   console.log('params', params);
   console.log('sending query', query);
@@ -50,11 +50,49 @@ itemController.create = (req, res, next) => {
     });
 };
 
-// CLAIM ITEM
+// EDIT item "Claim"
+// by Item ID, userID and cost are optional
+itemController.edit = (req, res, next) => {
+  const { item_id , user_id, cost } = req.body;
 
-// EDIT ITEM
+  const query = `UPDATE items
+  SET user_id = $2,
+  cost = $3
+  WHERE _id = $1
+  RETURNING *;`;
+
+  const params = [item_id, user_id, cost]
+
+  db.query(query, params)
+    .then(data => {
+      res.locals.item = data.rows[0];
+      return next();
+    })
+    .catch(err => {
+      return next(err);
+    });
+};
 
 // REMOVE ITEM
+itemController.delete = (req, res, next) => {
+  const { item_id } = req.body;
 
+  const query = `DELETE FROM items
+  WHERE _id = $1
+  RETURNING *;`;
+
+  const params = [item_id];
+
+  db.query(query, params)
+    .then(data => {
+      console.log('itemDEL data', data);
+      res.locals.item = data.rows[0];
+      return next();
+    })
+    .catch(err => {
+      console.log('itemDEL err', err);
+      return next(err);
+    });
+};
 
 module.exports = itemController;

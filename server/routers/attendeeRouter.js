@@ -1,18 +1,22 @@
 const express = require('express');
 const attendeeController = require('../controllers/attendeeController');
+const itemController = require('../controllers/itemController');
+const userController = require('../controllers/userController');
 
 const router = express.Router();
 
-// get list of attendees for an event
-router.get('/:id',
+// get list of attendees for an event by eventId
+router.get('/:event_id',
+  attendeeController.getByEvent,
   (req, res) => {
-    return res.status(200).json('list of attendees');
+    return res.status(200).json(res.locals);
   }
 );
 
 // add attendee to event "invite"
 router.post('/',
   attendeeController.addAttendee,
+  userController.getByID,
   (req, res) => {
     return res.status(200).json(res.locals.host);
   }
@@ -21,15 +25,19 @@ router.post('/',
 // update attendees host status
 router.put('/',
   attendeeController.updateHost,
+  userController.getByID,
   (req, res) => {
     return res.status(200).json(res.locals.host);
   }
 );
 
 // remove attendee
+// can these be ONE query?
 router.delete('/',
+  attendeeController.removeAttendee,
+  itemController.unclaimUserItemsFromEvent,
   (req, res) => {
-    return res.status(200).json('removed attendee');
+    return res.status(200).json(res.locals);
   }
 );
 

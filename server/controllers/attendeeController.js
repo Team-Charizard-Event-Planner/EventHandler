@@ -2,14 +2,35 @@ const db = require("../schemas/schema");
 
 const attendeeController = {};
 
-// 
+// ALL attendees by event
+attendeeController.getByEvent = (req, res, next) => {
+  // if coming from another middleware, grab event_id from middleware
+  const event_id = res.locals.event ? res.locals.event._id : req.params.event_id;
+
+  const params = [event_id];
+
+  // need to get event_id & join usernames
+  const query = `SELECT a.event_id, a.user_id, u.username FROM attendees a
+  LEFT OUTER JOIN users u ON a.user_id = u._id
+  WHERE a.event_id = $1;`;
+  
+  db.query(query, params)
+    .then(data => {
+      console.log('data in attendees getByEvent', data.rows);
+      res.locals.attendees = data.rows;
+      return next();
+    })
+    .catch(err => {
+      console.log('err in attendees getByEvent', err);
+      return next(err);
+    })
+};
 
 // comes after another middleware, adds user as a host
 // TO-DO: can we integrate this into the createEvent query so we only call the database once?
 attendeeController.addUserAfterCreate = (req, res, next) => {
   const { _id, creator_id } = res.locals.event;
   const isHost = res.locals.isHost;
-  console.log('adding user after creation', _id, creator_id, isHost);
 
   const query = `INSERT INTO attendees
   (event_id, user_id, is_host)
@@ -24,7 +45,7 @@ attendeeController.addUserAfterCreate = (req, res, next) => {
 
       // is this step necessary?
       res.locals.host = data.rows[0];
-
+      res.locals.user_id = data.rows[0].creator_id;
       return next();
     })
     .catch(err => {
@@ -50,6 +71,7 @@ attendeeController.addAttendee = (req, res, next) => {
 
       // add host info
       res.locals.host = data.rows[0];
+      res.locals.user_id = data.rows[0].user_id;
       return next();
     })
     .catch(err => {
@@ -76,6 +98,7 @@ attendeeController.updateHost = (req, res, next) => {
 
       // updated host info
       res.locals.host = data.rows[0];
+      res.locals.user_id = data.rows[0].user_id;
       return next();
     })
     .catch(err => {

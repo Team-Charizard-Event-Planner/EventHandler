@@ -1,11 +1,12 @@
 const express = require('express');
 const itemController = require('../controllers/itemController');
+const userController = require('../controllers/userController');
 
 const router = express.Router();
 
 // GET ALL ITEMS BY EVENT
 router.get('/:event_id',
-  itemController.getAllByEvent,
+  itemController.getByEvent,
   (req, res) => {
     return res.status(200).json(res.locals.items);
   }
@@ -22,8 +23,9 @@ router.post('/',
 // EDIT
 router.put('/',
   itemController.edit,
+  userController.getByID,
   (req, res) => {
-    return res.status(200).json(res.locals.item);
+    return res.status(200).json(res.locals);
   }
 );
 

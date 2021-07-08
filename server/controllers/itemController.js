@@ -3,8 +3,8 @@ const db = require('../schemas/schema');
 const itemController = {};
 
 // GET ALL ITEMS FOR EVENT
-itemController.getAllByEvent = (req, res, next) => {
-  const { event_id } = req.params;
+itemController.getByEvent = (req, res, next) => {
+  const event_id = res.locals.event ? res.locals.event._id : req.params.event_id;
   const params = [event_id];
 
   const query = `SELECT i.*, u.username
@@ -14,7 +14,7 @@ itemController.getAllByEvent = (req, res, next) => {
 
   db.query(query, params)
     .then(data => {
-      console.log('data in getAllItems', data);
+      console.log('data in getAllItems', data.rows);
       res.locals.items = data.rows;
       return next();
     })
@@ -55,6 +55,12 @@ itemController.create = (req, res, next) => {
 itemController.edit = (req, res, next) => {
   const { item_id , user_id, cost } = req.body;
 
+  // const query = `UPDATE items
+  // SET user_id = $2,
+  // cost = $3
+  // WHERE _id = $1
+  // RETURNING *;`;
+
   const query = `UPDATE items
   SET user_id = $2,
   cost = $3
@@ -63,12 +69,16 @@ itemController.edit = (req, res, next) => {
 
   const params = [item_id, user_id, cost]
 
+  console.log('sending query');
+
   db.query(query, params)
     .then(data => {
+      console.log('received query', data.rows);
       res.locals.item = data.rows[0];
       return next();
     })
     .catch(err => {
+      console.log('err', err);
       return next(err);
     });
 };
@@ -91,6 +101,30 @@ itemController.delete = (req, res, next) => {
     })
     .catch(err => {
       console.log('itemDEL err', err);
+      return next(err);
+    });
+};
+
+itemController.unclaimUserItemsFromEvent = (req, res, next) => {
+  const { event_id, user_id } = req.body;
+
+  const query = `UPDATE items
+  SET user_id = NULL
+  WHERE event_id = $1 AND user_id = $2
+  RETURNING event_id, user_id;`;
+
+  const params = [event_id, user_id,];
+
+  db.query(query, params)
+    .then(data => {
+      console.log('unclaim all items', data);
+
+      // updated host info
+      res.locals.userItems = data.rows[0];
+      return next();
+    })
+    .catch(err => {
+      console.log('error in unclaim all', err);
       return next(err);
     });
 };

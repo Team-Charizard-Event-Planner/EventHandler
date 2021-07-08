@@ -1,26 +1,44 @@
-const express = require("express");
-const attendeeController = require("../controllers/attendeeController");
+const express = require('express');
+const attendeeController = require('../controllers/attendeeController');
+const itemController = require('../controllers/itemController');
+const userController = require('../controllers/userController');
 
 const router = express.Router();
 
-// get list of attendees for an event
-router.get("/:id", attendeeController.getAllAttendees, (req, res) => {
-  return res.status(200).json(res.locals.attendees);
-});
+// get list of attendees for an event by eventId
+router.get('/:event_id',
+  attendeeController.getByEvent,
+  (req, res) => {
+    return res.status(200).json(res.locals);
+  }
+);
 
 // add attendee to event "invite"
-router.post("/", attendeeController.addAttendee, (req, res) => {
-  return res.status(200).json(res.locals.host);
-});
+router.post('/',
+  attendeeController.addAttendee,
+  userController.getByID,
+  (req, res) => {
+    return res.status(200).json(res.locals);
+  }
+);
 
 // update attendees host status
-router.put("/", attendeeController.updateHost, (req, res) => {
-  return res.status(200).json(res.locals.host);
-});
+router.put('/',
+  attendeeController.updateHost,
+  userController.getByID,
+  (req, res) => {
+    return res.status(200).json(res.locals.host);
+  }
+);
 
 // remove attendee
-router.delete("/", (req, res) => {
-  return res.status(200).json("removed attendee");
-});
+// can these be ONE query?
+router.delete('/',
+  attendeeController.removeAttendee,
+  itemController.unclaimUserItemsFromEvent,
+  (req, res) => {
+    return res.status(200).json(res.locals);
+  }
+);
 
 module.exports = router;

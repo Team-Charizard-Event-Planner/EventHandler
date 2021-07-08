@@ -29,7 +29,8 @@ cookieController.storeSSIDinDB = (req, res, next) => {
   `;
   console.log('in storeSSIDinDB', values, ssidInsert);
   db.query(ssidInsert, values)
-    .then(data => {
+    .then((data) => {
+      console.log('ssid data', data);
       return next();
     })
     .catch(err => {
@@ -46,7 +47,7 @@ cookieController.storeSSIDinDB = (req, res, next) => {
 cookieController.checkCookies = (req, res, next) => {
   const { token } = req.body;
   const values = [token];
-  cookieQuery = `
+  const cookieQuery = `
   SELECT user_id, token, expiration
   FROM sessions WHERE token = $1;
   `;

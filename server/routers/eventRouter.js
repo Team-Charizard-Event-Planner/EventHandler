@@ -1,6 +1,7 @@
-const express = require("express");
-const eventController = require("../controllers/eventController");
-const attendeeController = require("../controllers/attendeeController");
+const express = require('express');
+const eventController = require('../controllers/eventController');
+const attendeeController = require('../controllers/attendeeController');
+const itemController = require('../controllers/itemController');
 
 const router = express.Router();
 
@@ -9,11 +10,17 @@ router.get("/userID/:userID", eventController.getEvents, (req, res) => {
   return res.status(200).json(res.locals.events);
 });
 
-// get specific
 // eventController GET ONE
-router.get("/id/:id", (req, res) => {
-  return res.status(200).json("get one event");
-});
+// responds with { event: {}, attendees: {}, items: {} }
+// can these be a single query?
+router.get('/:event_id',
+  eventController.getByEventID,
+  attendeeController.getByEvent,
+  itemController.getByEvent,
+  (req, res) => {
+    return res.status(200).json(res.locals);
+  }
+);
 
 // create event
 router.post(
@@ -28,9 +35,13 @@ router.post(
 );
 
 // edit events
-// eventController UPDATE
-router.put("/", (req, res) => {
-  return res.status(200).json("edit event");
-});
+// NOTE: events MUST have all non-null properties specified, 
+// MUST to pass in TITLE, DATE even if not modified
+router.put('/',
+  eventController.updateEvent,
+  (req, res) => {
+    return res.status(200).json(res.locals);
+  }
+);
 
 module.exports = router;

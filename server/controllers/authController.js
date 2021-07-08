@@ -82,12 +82,6 @@ authController.createUser = async (req, res, next) => {
     const result = await db.query(query, params);
 
     // on SUCCESS, pass to next middleware w/ success message
-    // {
-    //     "username": "Squirtle",
-    //     "email": "zenigame@pokemon.com",
-    //     "first_name": "Squirt",
-    //     "last_name": "Turtle"
-    // }
     const newUser = result.rows[0];
     res.locals.user = newUser;
     return next();

@@ -55,7 +55,7 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log('Event Handler knows all');
+  console.log(`Event Handler knows all, PORT:${PORT}`);
 });
 
 module.exports = app;

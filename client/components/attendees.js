@@ -24,7 +24,7 @@ const Attendee = () => {
   console.log("attendeelist", attendeeList);
   const attendees = []
   for (let i = 0; i < attendeeList.length; i++) {
-    attendees.push(<ul id={attendeeList[i]._id} className="item">
+    attendees.push(<ul id={attendeeList[i]._id} key={`attendee${i}`} className="item">
     {attendeeList[i].first_name}{" "}
     <Button variant="contained" color="secondary" onClick={handleDelete}>
       x

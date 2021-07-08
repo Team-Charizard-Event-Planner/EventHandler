@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Checkbox } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@material-ui/core";
@@ -24,9 +24,9 @@ const ItemList = () => {
       console.log('what is res', res)
       return res.json();
     })
-    then((data) => {
+    .then((data) => {
       console.log('what is data', data)
-      dispatch({ type: })
+      // dispatch({ type: })
     })
   })
   // think i will need a fetch request to get all attendess here

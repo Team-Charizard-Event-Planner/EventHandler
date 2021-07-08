@@ -1,11 +1,20 @@
 import React from "react";
-// import { Box } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
 
 const Attendee = () => {
+  const dispatch = useDispatch();
+  // const attendeeList = useSelector((state) => state.events.atendeeArray);
 
+  const handleDelete = () => {};
   return (
-    // need to add an x to delete
-      <ul id="attendee"></ul>
+    <div>
+      <ul className="attendee">
+        {/* {attendees} */}
+        <button className="removeAttendee" onClick={handleDelete}>
+          x
+        </button>
+      </ul>
+    </div>
   );
 };
 

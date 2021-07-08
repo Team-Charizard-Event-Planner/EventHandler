@@ -42,7 +42,7 @@ authController.login = (req, res, next) => {
         email,
         isLoggedIn: true,
       };
-
+      console.log("compare hash", compareHash);
       // subject to change because of encryption
       return compareHash
         ? next()

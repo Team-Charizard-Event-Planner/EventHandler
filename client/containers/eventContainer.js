@@ -3,6 +3,9 @@ import EventHeader from "../headers/eventHeader";
 import EventBoxDisplay from "./eventBoxDisplay";
 
 const EventContainer = () => {
+
+  fetch('')
+
   return (
     <div>
       <EventHeader heading="Your Events" />

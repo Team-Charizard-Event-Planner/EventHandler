@@ -1,19 +1,39 @@
 import React from "react";
-import { FormControlLabel, Checkbox } from "@material-ui/core";
+import { Checkbox } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
 
-const EventBox = () => {
+const ItemList = () => {
+  const dispatch = useDispatch();
+
+  const isClaimed = useSelector((state) => state.events.isClaimed);
+  const items = useSelector((state) => state.events.itemArray);
+
+  const itemsArray = (array) => {
+    for (let i = 0; i < array.length; i++) 
+    items.push(<ul id={i} className="item">{array[i]}</ul>);
+  }
+
+  // console.log(isClaimed);
+  // console.log(itemArray);
+
   const handleClaim = () => {
-    //redirect to specific event
+    isClaimed
+      ? dispatch({ type: "IS_CLAIMED", payload: false })
+      : dispatch({ type: "IS_CLAIMED", payload: true });
   };
+  const handleDelete = () => {
+   
+  }
 
   return (
-    <FormControlLabel
-      control={<Checkbox />}
-      name="item"
-      labelPlacement="end"
-      onChange={handleClaim}
-    />
+    <div>
+      <ul className="item">
+        {itemsArray}
+        <Checkbox onChange={handleClaim} />
+        <button onClick={handleDelete}>x</button>
+      </ul>
+    </div>
   );
 };
 
-export default EventBox;
+export default ItemList;

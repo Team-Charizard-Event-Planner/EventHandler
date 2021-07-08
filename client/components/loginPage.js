@@ -47,10 +47,10 @@ const LoginPage = () => {
         onSubmit={handleSubmit}
       >
         {/* need to add in action here for redux */}
-        <TextField label="email" name="email" onChange={handleChange} />
+        <TextField id="email-login" label="email" name="email" onChange={handleChange} />
         <br></br>
         {/* need to add in action here for redux */}
-        <TextField label="password" name="password" onChange={handleChange} />
+        <TextField id="password-login" label="password" name="password" onChange={handleChange} />
         <br></br>
       </form>
       <Button type="submit" variant="contained" color="secondary">

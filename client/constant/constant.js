@@ -8,3 +8,6 @@ export const LOGIN_CHECK = "LOGIN_CHECK";
 export const FIRST_NAME = "FIRST_NAME";
 export const USER_DATA = "USER_DATA";
 export const USER_LOGOUT = "USER_LOGOUT";
+export const GET_EVENTS = "GET_EVENTS";
+export const EVENT_INDEX_ID = "EVENT_INDEX_ID";
+export const GET_ATTENDEES = "GET_ATTENDEES";

@@ -3,8 +3,11 @@ const path = require('path');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
-const authRouter = require('./routers/auth');
-const eventRouter = require('./routers/event');
+const authRouter = require('./routers/authRouter');
+const eventRouter = require('./routers/eventRouter');
+// const userRouter = require("./routers/userRouter");
+
+// app.use("/api/user", userRouter);
 
 const app = express();
 const PORT = 3000;
@@ -35,7 +38,7 @@ app.get('/', (req, res) => {
 
 // 404
 app.use((req, res) => {
-  console.log('404');
+  console.log('route not found - 404 ;( ');
   return res.sendStatus(404);
 })
 

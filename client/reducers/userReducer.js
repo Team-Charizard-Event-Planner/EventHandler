@@ -1,6 +1,7 @@
 import * as types from "../constant/constant";
 
 const initialState = {
+  userId: "",
   username: "",
   loggedIn: false,
   firstName: "",
@@ -14,6 +15,7 @@ const userReducer = (state = initialState, action) => {
       userObj = action.payload;
       return {
         ...state,
+        userId: userObj._id,
         username: userObj.username,
         firstName: userObj.first_name,
         lastName: userObj.last_name,

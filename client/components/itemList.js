@@ -9,21 +9,33 @@ const ItemList = () => {
   const items = useSelector((state) => state.events.itemArray);
 
   const itemsArray = (array) => {
-    for (let i = 0; i < array.length; i++) 
-    items.push(<ul id={i} className="item">{array[i]}</ul>);
-  }
-
-  // console.log(isClaimed);
-  // console.log(itemArray);
+    for (let i = 0; i < array.length; i++)
+      // will need to access the id as the key and object value
+      items.push(
+        <ul id={array[i]._id} className="item">
+          {array[i]}
+        </ul>
+      );
+  };
 
   const handleClaim = () => {
     isClaimed
       ? dispatch({ type: "IS_CLAIMED", payload: false })
       : dispatch({ type: "IS_CLAIMED", payload: true });
   };
-  const handleDelete = () => {
-   
-  }
+  const handleDelete = (e) => {
+    const removeId = e.target.id;
+    document.getElementById(removeId).remove();
+    fetch("/item/delete", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        removeId,
+      }).then((res) => res.json()),
+    }).catch((err) => console.log(err));
+  };
 
   return (
     <div>

@@ -9,7 +9,7 @@ import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 
 import { render, fireEvent, screen } from '@testing-library/react';
-import LoginPage from '../../client/components/loginPage.jsx';
+import LoginPage from '../../client/components/loginPage.js';
 
 test('testing input fields in Login Page', () => {
 //   const element = document.getElementById('root');

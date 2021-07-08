@@ -7,7 +7,7 @@ eventController.create = (req, res, next) => {
   // input data on request body
   const { title, date, description, creator_id } = req.body;
   // sanitize
-
+  console.log(req.body);
   // query string
   const query = `INSERT INTO events
   (title, date, description, creator_id)
@@ -19,15 +19,15 @@ eventController.create = (req, res, next) => {
 
   // db query
   db.query(query, params)
-    .then(data => {
+    .then((data) => {
       // send data through to next handler
       res.locals.event = data.rows[0];
       // attach isHost for subsequent handlers
       res.locals.isHost = true;
       return next();
     })
-    .catch(err => {
-      console.log('addEvent error', err);
+    .catch((err) => {
+      console.log("addEvent error", err);
       return next(err);
     });
 };
@@ -44,13 +44,13 @@ eventController.getEvents = (req, res, next) => {
   WHERE user_id = $1;`;
 
   db.query(query, params)
-    .then(data => {
+    .then((data) => {
       res.locals.events = data.rows;
       return next();
     })
-    .catch(err => {
+    .catch((err) => {
       return next(err);
-    })
+    });
 };
 
 // edit event

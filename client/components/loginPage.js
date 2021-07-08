@@ -1,61 +1,98 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // import { useDispatch } from "react-redux";
+// import { useHistory } from "react-router-dom";
 import { Button, TextField } from "@material-ui/core";
 
 const LoginPage = () => {
   // const dispatch = useDispatch();
 
-  const handleChange = (e) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  // const isLoggedIn = false;
+  // isLoggedIn global state
+  // let history = useHistory();
+
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     history.push("/home");
+  //   } else history.push("/login");
+  // });
+
+  // const handleSignUp = () => {
+  //   history.push("/signup");
+  // };
+
+  const handleEmail = (e) => {
     e.preventDefault();
-    console.log("hello");
+    setEmail(e.target.value);
+  };
+
+  const handlePassword = (e) => {
+    e.preventDefault();
+    setPassword(e.target.value);
   };
 
   const handleSubmit = (e) => {
+    console.log("handleSub");
     e.preventDefault();
-    fetch("/user/login", {
+    fetch("/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        //need redux store
+        email,
+        password,
       }),
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data === "incorrect username/password")
-          console.log("incorrect password");
-        else {
-          fetch("/user/verify", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({}),
-          });
-        }
+        // dispatch({type: 'LOGIN_CHECK', payload: isLoggedIn })
+        console.log(data);
+        if (data === "Logging in") console.log("success");
+        //   else {
+        //     fetch("/auth/verify", {
+        //       method: "POST",
+        //       headers: {
+        //         "Content-Type": "application/json",
+        //       },
+        //       //set state for username or first name in redux
+        //       body: JSON.stringify({}),
+        //     });
+        //   }
+        // })
+        // .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
   };
-
   return (
     <div id="LoginPage">
-      <form
-        id="LoginForm"
-        method="POST"
-        action="/api/user/login"
-        onSubmit={handleSubmit}
-      >
-        {/* need to add in action here for redux */}
-        <TextField label="email" name="email" onChange={handleChange} />
-        <br></br>
-        {/* need to add in action here for redux */}
-        <TextField label="password" name="password" onChange={handleChange} />
-        <br></br>
-      </form>
-      <Button type="submit" variant="contained" color="secondary">
-        Login
+
+      {/* onClick={handleSignUp} */}
+      <Button variant="contained" color="secondary">
+        Sign Up
       </Button>
+      <form id="LoginForm" onSubmit={handleSubmit}>
+        <TextField
+          id="emailLogin"
+          label="email"
+          name="email"
+          onChange={handleEmail}
+        />
+        <br></br>
+        <TextField
+          id="passwordLogin"
+          type="password"
+          label="password"
+          name="password"
+          onChange={handlePassword}
+        />
+
+        <br></br>
+        <Button type="submit" variant="contained" color="primary">
+          Login
+        </Button>
+      </form>
     </div>
   );
 };

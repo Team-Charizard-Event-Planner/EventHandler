@@ -73,14 +73,14 @@ const LoginPage = () => {
       </Button>
       <form id="LoginForm" onSubmit={handleSubmit}>
         <TextField
-          id="emailLogin"
+          id="email-login"
           label="email"
           name="email"
           onChange={handleEmail}
         />
         <br></br>
         <TextField
-          id="passwordLogin"
+          id="password-login"
           type="password"
           label="password"
           name="password"

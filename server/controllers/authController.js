@@ -1,33 +1,103 @@
-const db = require('../database/dbModel');
-
+const db = require("../schemas/schema");
+const bcrypt = require('bcryptjs');
 const authController = {};
 
-authController.checkLogin = async (req, res, next) => {
-  // TO-DO: sanitize inputs
-  // const { username, password } = req.body;
+const saltRounds = 10;
 
-  const query = `SELECT users.* FROM users;`;
+// TO-DO: refactor into async bcrypt
 
-  // CREATE TABLE "users" (
-//   "_id" smallserial PRIMARY KEY NOT NULL,
-//   "first_name" varchar NOT NULL,
-//   "last_name" varchar NOT NULL,
-//   "username" varchar NOT NULL,
-//   "password" varchar NOT NULL,
-//   "email" varchar NOT NULL
-// );
-  console.log('about to send query', query);
+// verifying login info
+authController.login = (req, res, next) => {
+
+  const { email, password } = req.body;
+  // sanitize data
+
+  const params = [email];
+  
+  const query = `
+  SELECT _id, username, password, first_name, last_name, email
+  FROM users WHERE email = $1
+  ;`;
+  
+  db.query(query, params)
+    .then((result) => {
+      console.log('result from login', result);
+      if (!result.rows.length) {
+        res.locals.user = false;
+        return next({
+          log: "user does not exist",
+          message: "incorrect email/password",
+        });
+      }
+      
+      const dbPassword = result.rows[0].password;
+      const compareHash = bcrypt.compareSync(password, dbPassword);
+  
+      // subject to change because of encryption
+      return compareHash
+        ? next()
+        : next({
+            log: "incorrect email/password",
+            message: "incorrect email/password",
+          });
+    });
+};
+
+// creating a new user
+authController.createUser = async (req, res, next) => {
+  // gather username, password, firstname, lastname, email from req.body
+  const { username, password, firstname, lastname, email } = req.body;
+  // sanitize data
+
+  // salt & hash password
+  // generate salt
+  const salt = bcrypt.genSaltSync(saltRounds)
+  // generate hash
+  const hashPass = bcrypt.hashSync(password, salt);
+  // store data on parameters array
+  const params = [username, hashPass, email, firstname, lastname];
+
+  // create query string for INSERT
+  const query = `INSERT INTO users 
+  (username, password, email, first_name, last_name)
+  VALUES($1, $2, $3, $4, $5)
+  RETURNING username, email, first_name, last_name;`;
+
+  // try:
   try {
+    // database query
+    const result = await db.query(query, params)
 
-    const response = await db.query(query);
-    console.log('checkLogin', response);
-    res.locals.response = response;
+    // on SUCCESS, pass to next middleware w/ success message
+// {
+//     "username": "Squirtle",
+//     "email": "zenigame@pokemon.com",
+//     "first_name": "Squirt",
+//     "last_name": "Turtle"
+// }
+    const newUser = result.rows[0];
+    res.locals.user = newUser;
     return next();
 
   } catch (err) {
-    console.log('error', err);
-    return next({ err });
+    // catch: pass database errors to error handler
+    console.log('err', err);
+    return next({
+      log: 'error adding user to database',
+      message: 'error adding user to database'
+    });
   }
 };
+
+// log out user
+// is this needed on server side? how do jwts store login info?
+authController.logout = (req, res, next) => {
+  return next();
+};
+
+// edit user info
+authController.edit = (req, res, next) => {
+  return next();
+}
 
 module.exports = authController;

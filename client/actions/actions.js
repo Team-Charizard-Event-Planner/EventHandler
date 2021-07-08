@@ -48,3 +48,8 @@ export const getEventIndexAndId = (eventInfo) => ({
   type: types.EVENT_INDEX_ID,
   payload: eventInfo,
 });
+
+export const getItems = (itemArray) => ({
+  type: types.GET_ITEMS,
+  payload: itemArray,
+});

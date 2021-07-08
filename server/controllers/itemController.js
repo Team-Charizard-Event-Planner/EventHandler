@@ -1,4 +1,4 @@
-const db = ('../schemas/schema');
+const db = require("../schemas/schema");
 
 const itemController = {};
 
@@ -12,6 +12,5 @@ const itemController = {};
 // EDIT ITEM
 
 // REMOVE ITEM
-
 
 module.exports = itemController;

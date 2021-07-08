@@ -5,9 +5,8 @@ const cookieParser = require('cookie-parser');
 
 const authRouter = require('./routers/authRouter');
 const eventRouter = require('./routers/eventRouter');
-// const userRouter = require("./routers/userRouter");
-
-// app.use("/api/user", userRouter);
+const attendeeRouter = require('./routers/attendeeRouter');
+const itemRouter = require('./routers/itemRouter');
 
 const app = express();
 const PORT = 3000;
@@ -21,14 +20,12 @@ app.use(cookieParser());
 // routes
 // static routes
 
-// /auth for user authentication pathways
+// main routes
 app.use('/auth', authRouter);
-
-// /event for event fetching & creation
 app.use('/event', eventRouter);
-
+app.use('/attendee', attendeeRouter);
+app.use('/item', itemRouter);
 // should event include item? should item be separate?
-
 
 // serve HTML
 app.get('/', (req, res) => {

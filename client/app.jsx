@@ -1,14 +1,16 @@
 import React from "react";
-import { render } from "react-dom";
-import { Provider, createStore } from "react-redux";
+// import { Provider, createStore } from "react-redux";
+import LoginPage from "./components/loginPage";
 
-const store = createStore();
+// const store = createStore();
+// need to include Provider
 
 const App = () => {
-  render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
-    document.getElementById("root")
+  return (
+    <div>
+      <LoginPage />
+    </div>
   );
 };
+
+export default App;

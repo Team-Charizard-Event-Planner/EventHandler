@@ -4,7 +4,7 @@ CREATE TABLE "users" (
   "last_name" varchar NOT NULL,
   "username" varchar UNIQUE NOT NULL,
   "password" varchar NOT NULL,
-  "email" varchar NOT NULL
+  "email" varchar UNIQUE NOT NULL
 );
 CREATE TABLE "items" (
   "_id" smallserial PRIMARY KEY NOT NULL,

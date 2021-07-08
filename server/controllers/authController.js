@@ -30,9 +30,13 @@ authController.login = (req, res, next) => {
         });
       }
       
+      const { _id, username, first_name, last_name, email } = result.rows[0];
+
       const dbPassword = result.rows[0].password;
       const compareHash = bcrypt.compareSync(password, dbPassword);
-  
+
+      res.locals.user = { _id, username, first_name, last_name, email, isLoggedIn: true };
+
       // subject to change because of encryption
       return compareHash
         ? next()
@@ -40,13 +44,16 @@ authController.login = (req, res, next) => {
             log: "incorrect email/password",
             message: "incorrect email/password",
           });
+    })
+    .catch((err) => {
+      return next(err);
     });
 };
 
 // creating a new user
 authController.createUser = async (req, res, next) => {
   // gather username, password, firstname, lastname, email from req.body
-  const { username, password, firstname, lastname, email } = req.body;
+  const { username, password, first_name, last_name, email } = req.body;
   // sanitize data
 
   // salt & hash password
@@ -55,7 +62,7 @@ authController.createUser = async (req, res, next) => {
   // generate hash
   const hashPass = bcrypt.hashSync(password, salt);
   // store data on parameters array
-  const params = [username, hashPass, email, firstname, lastname];
+  const params = [username, hashPass, email, first_name, last_name];
 
   // create query string for INSERT
   const query = `INSERT INTO users 

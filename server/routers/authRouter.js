@@ -21,15 +21,16 @@ router.post('/login',
   (req, res) => {
     // const { token } = res.locals;
     // res.cookie('AuthToken', token, {maxAge: 3000, httpOnly: true})
-    return res.status(200).json({ login: true });
+    return res.status(200).json(res.locals.user);
   }
 );
 
 // do we want a separate route for just JWT verification?
+// 
 router.post('/verify',
   // authController.verifyCookie,
   (req, res) => {
-    return res.status(200).json('verified');
+    return res.status(200).json({ login: true });
   }
 );
 

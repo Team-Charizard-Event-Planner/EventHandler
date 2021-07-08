@@ -67,6 +67,7 @@ const LoginPage = () => {
   };
   return (
     <div id="LoginPage">
+
       {/* onClick={handleSignUp} */}
       <Button variant="contained" color="secondary">
         Sign Up
@@ -86,6 +87,7 @@ const LoginPage = () => {
           name="password"
           onChange={handlePassword}
         />
+
         <br></br>
         <Button type="submit" variant="contained" color="primary">
           Login

@@ -1,15 +1,17 @@
-const db = require("../database/dbModel");
+const db = require("../schemas/schema");
 
 const authController = {};
 
 authController.loginCheck = (req, res, next) => {
+  console.log("body", req.body);
   const { email, password } = req.body;
-  const params = [email, password];
+  const params = [email];
   const query = `
   SELECT password FROM users WHERE email = $1
   `;
   db.query(query, params)
     .then((result) => {
+      console.log("what is result", result);
       if (!result.rows.length) {
         console.log("user does not exist");
         res.locals.user = false;

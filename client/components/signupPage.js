@@ -11,10 +11,8 @@ const SignupPage = () => {
     <div id="SignupPage">
       <form
         id="SignupForm"
-        method="POST"
-        action="/api/signup"
         onSubmit={handleSubmit}
-        
+
       ></form>
     </div>
   );

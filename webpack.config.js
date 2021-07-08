@@ -14,9 +14,10 @@ module.exports = {
   plugins: [new MiniCssExtractPlugin()],
   devServer: {
     publicPath: "/build/",
+    port: 8080,
     proxy: {
-      "/api": "http:localhost:3000/",
-      "/auth": "http:localhost:3000/",
+      "/api": "http://localhost:3000/",
+      "/auth": "http://localhost:3000",
     },
     headers: {
       "Access-Control-Allow-Origin": "*",

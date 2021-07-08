@@ -22,13 +22,18 @@ const LoginPage = () => {
   //   history.push("/signup");
   // };
 
-  const handleChange = (e) => {
+  const handleEmail = (e) => {
     e.preventDefault();
     setEmail(e.target.value);
+  };
+
+  const handlePassword = (e) => {
+    e.preventDefault();
     setPassword(e.target.value);
   };
 
   const handleSubmit = (e) => {
+    console.log("handleSub");
     e.preventDefault();
     fetch("/auth/login", {
       method: "POST",
@@ -71,17 +76,18 @@ const LoginPage = () => {
           id="emailLogin"
           label="email"
           name="email"
-          onChange={handleChange}
+          onChange={handleEmail}
         />
         <br></br>
         <TextField
           id="passwordLogin"
+          type="password"
           label="password"
           name="password"
-          onChange={handleChange}
+          onChange={handlePassword}
         />
         <br></br>
-        <Button type="submit" variant="contained" color="secondary">
+        <Button type="submit" variant="contained" color="primary">
           Login
         </Button>
       </form>

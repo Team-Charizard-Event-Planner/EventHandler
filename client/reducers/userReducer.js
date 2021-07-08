@@ -1,37 +1,28 @@
 import * as types from "../constant/constant";
 
 const initialState = {
-  email: "",
+  userId: "",
+  username: "",
   loggedIn: false,
   firstName: "",
+  lastName: "",
 };
 
 const userReducer = (state = initialState, action) => {
-  // let email;
-  let loggedIn;
-  let firstName;
+  let userObj;
   switch (action.type) {
-    // case types.ADD_EMAIL:
-    //   email = action.payload;
-    //   return {
-    //     ...state,
-    //     email,
-    //   };
-    case types.LOGIN_CHECK:
-      loggedIn = action.payload;
+    case types.USER_DATA:
+      userObj = action.payload;
       return {
         ...state,
-        loggedIn,
+        userId: userObj._id,
+        username: userObj.username,
+        firstName: userObj.first_name,
+        lastName: userObj.last_name,
+        loggedIn: userObj.isLoggedIn,
       };
-    case types.FIRST_NAME:
-      firstName = action.payload;
-      return {
-        ...state,
-        firstName,
-      };
-    default: {
+    default:
       return state;
-    }
   }
 };
 

@@ -7,56 +7,44 @@ export const addItem = (item) => ({
 
 export const deleteItem = (item) => ({
   type: types.DELETE_ITEM,
-  payload: item,
-})
+  payload: item._id,
+});
 
-export const isClaimed = (claimed) => ({
+export const isClaimed = (userObj) => ({
   type: types.IS_CLAIMED,
-  payload: claimed,
-})
+  payload: userObj._id,
+});
 
 export const editEvent = (newTitle, newDescription, newDate) => ({
   type: types.EDIT_EVENT,
-  payload: {title: newTitle, description: newDescription, date: newDate}
-})
-
-// export const editTitle = (title) => ({
-//   type: types.EDIT_TITLE,
-//   payload: title,
-// })
-
-// export const editDescription = (description) => ({
-//   type: types.EDIT_DESCRIPTION,
-//   payload: description,
-// })
-
-// export const editDate = (date) => ({
-//   type: types.EDIT_DATE,
-//   payload: date,
-// })
+  payload: { title: newTitle, description: newDescription, date: newDate },
+});
 
 export const addAttendee = (attendee) => ({
   type: types.ADD_ATTENDEE,
   payload: attendee,
-})
+});
 
 export const deleteAttendee = (attendee) => ({
   type: types.DELETE_ATTENDEE,
-  payload: attendee,
-})
-
-// wait do i even need this?
-export const addEmail = (email) => ({
-  type: types.ADD_EMAIL,
-  payload: email,
+  payload: attendee.user_id,
 });
 
-export const loginCheck = (loggedIn) => ({
-  type: types.LOGIN_CHECK,
-  payload: loggedIn,
-})
+export const userData = (userObj) => ({
+  type: types.USER_DATA,
+  payload: userObj,
+});
 
-export const firstName = (name) => ({
-  type: types.FIRST_NAME,
-  payload: name,
-})
+export const userLogout = () => ({
+  type: types.USER_LOGOUT,
+});
+
+export const getEvents = (eventArray) => ({
+  type: types.GET_EVENTS,
+  payload: eventArray,
+});
+
+export const getEventIndexAndId = (eventInfo) => ({
+  type: types.EVENT_INDEX_ID,
+  payload: eventInfo,
+});

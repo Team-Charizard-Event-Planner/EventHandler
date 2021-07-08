@@ -35,8 +35,8 @@ eventController.create = (req, res, next) => {
 // get events that user is invited to
 eventController.getEvents = (req, res, next) => {
   // user_id as param
-  const { userID } = req.params;
-  const params = [userID];
+  const { user_id } = req.params;
+  const params = [user_id];
 
   // query string joining attendees table with events table
   const query = `SELECT e.* FROM attendees a

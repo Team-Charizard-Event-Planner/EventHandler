@@ -8,6 +8,8 @@ const EventDetails = () => {
 
   // const [isDisabled, setDisabled] = useState(false)
   // can used disabled attribute to disable editing
+  // potentially conditional rendering using turnaries
+
 
   return (
     <Box className="eventDetails" onClick={handleClick}>

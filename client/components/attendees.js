@@ -4,6 +4,7 @@ import React from "react";
 const Attendee = () => {
 
   return (
+    // need to add an x to delete
       <ul id="attendee"></ul>
   );
 };

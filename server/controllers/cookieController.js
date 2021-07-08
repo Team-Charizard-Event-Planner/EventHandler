@@ -22,6 +22,16 @@ cookieController.setSSIDCookie = (req, res, next) => {
 };
 // pass back on cookies object
 // store sessionID in database
+cookieController.storeSSIDinDB = (req, res, next) => {
+  const { username, _id } = req.body;
+  const values = [username, _id];
+  const ssidInsert = `
+  INSERT _id 
+  INTO sessions
+  `;
+  console.log('in storeSSIDinDB', values, ssidInsert);
+  return next();
+};
 // when cookies expire delete from database ?
 // delete cookies
 

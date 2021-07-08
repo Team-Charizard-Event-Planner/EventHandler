@@ -24,7 +24,7 @@ CREATE TABLE "attendees" (
   "_id" smallserial PRIMARY KEY NOT NULL,
   "event_id" integer NOT NULL,
   "user_id" integer NOT NULL,
-  "isHost" boolean NOT NULL
+  "is_host" boolean NOT NULL
 );
 CREATE TABLE "sessions" (
   "_id" smallserial PRIMARY KEY NOT NULL,

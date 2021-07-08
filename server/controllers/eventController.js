@@ -35,8 +35,8 @@ eventController.create = (req, res, next) => {
 // get events that user is invited to
 eventController.getEvents = (req, res, next) => {
   // user_id as param
-  const { userID } = req.params;
-  const params = [userID];
+  const { user_id } = req.params;
+  const params = [user_id];
 
   // query string joining attendees table with events table
   const query = `SELECT e.* FROM attendees a
@@ -54,18 +54,44 @@ eventController.getEvents = (req, res, next) => {
 };
 
 // edit event
-
+eventController.updateEvent = (req, res, next) => {
+  const { event_id, title, date, description } = req.body;
+  
+  const query = `UPDATE events
+  SET title = $2,
+  date = $3,
+  description = $4
+  WHERE _id = $1
+  RETURNING *;`;
+  
+  const params = [event_id, title, date, description];
+  
+  db.query(query, params)
+    .then(data => {
+      console.log('update event data', data);
+  
+      // updated host info
+      res.locals.event = data.rows[0];
+      return next();
+    })
+    .catch(err => {
+      console.log('error in update event', err);
+      return next(err);
+    });
+};
 // get single event by eventID
-eventController.getByID = (req, res, next) => {
-  const { eventID } = req.body;
-  const params = [eventID];
+eventController.getByEventID = (req, res, next) => {
+  const { event_id } = req.params;
+  const params = [event_id];
 
-  const query = `SELECT * FROM events WHERE _id = $1;`;
+  const query = `SELECT e.*, u.username as creator_name FROM events e
+  LEFT OUTER JOIN users u ON e.creator_id = u._id
+  WHERE e._id = $1;`;
 
   db.query(query, params)
     .then(data => {
-      console.log('getByID data', data);
-      res.locals.events = data.rows[0];
+      console.log('getByID data', data.rows);
+      res.locals.event = data.rows[0];
       return next();
     })
     .catch(err => {

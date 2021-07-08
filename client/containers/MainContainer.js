@@ -2,7 +2,7 @@ import React from "react";
 import EventHeader from "../headers/eventHeader";
 import CurrentEventDisplay from "./CurrentEventDisplay";
 
-const EventViewContainer = () => {
+const MainContainer = () => {
   return (
     <div>
       <EventHeader heading="Event View" />
@@ -11,4 +11,4 @@ const EventViewContainer = () => {
   );
 };
 
-export default EventViewContainer;
+export default MainContainer;

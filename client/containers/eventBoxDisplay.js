@@ -1,6 +1,7 @@
 import React from "react";
 import EventBox from "../components/eventBox";
 import { Box } from "@material-ui/core";
+import CreateNewEventPopUp from "../components/createNewEventPopUp";
 
 const EventBoxDisplay = () => {
   const handleClick = (e) => {
@@ -19,9 +20,10 @@ const EventBoxDisplay = () => {
 
   return (
     <div>
-      <Box className="eventBox">
+      <CreateNewEventPopUp />
+      {/* <Box className="eventBox">
         <button onClick={handleClick}>Create Event +</button>
-      </Box>
+      </Box> */}
       {/* Displaying all other Events assigned to User */}
       {arrayOfEventBoxes}
     </div>

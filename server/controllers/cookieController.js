@@ -1,8 +1,7 @@
-const db = require('../schemas/schema.js');
+const db = require("../schemas/schema.js");
 const cookieController = {};
 
 // We need cookies to :
-
 
 // set the cookie as a unique ID
 cookieController.setSSIDCookie = (req, res, next) => {
@@ -13,10 +12,9 @@ cookieController.setSSIDCookie = (req, res, next) => {
   FROM users
   WHERE username = $1;
   `;
-  db.query(idQuery, values)
-    .then(data => {
-      res.cookie('ssid', data.rows[0]._id);
-    });
+  db.query(idQuery, values).then((data) => {
+    res.cookie("ssid", data.rows[0]._id);
+  });
 
   return next();
 };

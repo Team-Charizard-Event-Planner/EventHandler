@@ -2,6 +2,7 @@ const db = require("../schemas/schema");
 
 const eventController = {};
 
+// create new event
 eventController.create = (req, res, next) => {
   // input data on request body
   const { title, date, description, creator_id } = req.body;
@@ -38,8 +39,7 @@ eventController.getEvents = (req, res, next) => {
   const params = [userID];
 
   // query string joining attendees table with events table
-  const query = `SELECT e.*
-  FROM attendees a
+  const query = `SELECT e.* FROM attendees a
   LEFT OUTER JOIN events e ON a.event_id = e._id
   WHERE user_id = $1;`;
 
@@ -53,15 +53,39 @@ eventController.getEvents = (req, res, next) => {
     })
 };
 
-eventController.getByID = (req, res, next) => {
-  const { userID } = req.body;
+// edit event
 
-  return next();
+// get single event by eventID
+eventController.getByID = (req, res, next) => {
+  const { eventID } = req.body;
+  const params = [eventID];
+
+  const query = `SELECT * FROM events WHERE _id = $1;`;
+
+  db.query(query, params)
+    .then(data => {
+      console.log('getByID data', data);
+      res.locals.events = data.rows[0];
+      return next();
+    })
+    .catch(err => {
+      return next(err);
+    });
 };
 
-// get ALL Events, not to be used
+// get ALL Events, doesn't really have a use case
 eventController.getAll = (req, res, next) => {
-  return next();
+  const query = `SELECT * FROM events;`;
+
+  db.query(query)
+    .then(data => {
+      console.log('data', data);
+      res.locals.events = data.rows;
+      return next();
+    })
+    .catch(err => {
+      return next(err);
+    });
 };
 
 module.exports = eventController;

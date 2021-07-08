@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from "react";
-// import { useDispatch } from "react-redux";
-// import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Button, TextField } from "@material-ui/core";
 
 const LoginPage = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const isLoggedIn = false;
-  // isLoggedIn global state
-  // let history = useHistory();
+  const isLoggedIn = useSelector((state) => state.users.loggedIn);
 
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     history.push("/home");
-  //   } else history.push("/login");
-  // });
+  let history = useHistory();
 
-  // const handleSignUp = () => {
-  //   history.push("/signup");
-  // };
+  useEffect(() => {
+    if (isLoggedIn) {
+      history.push("/events");
+    }
+  }, [isLoggedIn]);
+
+  const handleSignUp = () => {
+    history.push("/signup");
+  };
 
   const handleEmail = (e) => {
     e.preventDefault();
@@ -45,42 +45,29 @@ const LoginPage = () => {
         password,
       }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        return res.json();
+      })
       .then((data) => {
-        // dispatch({type: 'LOGIN_CHECK', payload: isLoggedIn })
-        console.log(data);
-        if (data === "Logging in") console.log("success");
-        //   else {
-        //     fetch("/auth/verify", {
-        //       method: "POST",
-        //       headers: {
-        //         "Content-Type": "application/json",
-        //       },
-        //       //set state for username or first name in redux
-        //       body: JSON.stringify({}),
-        //     });
-        //   }
-        // })
-        // .catch((err) => console.log(err));
+        dispatch({ type: "USER_DATA", payload: data });
       })
       .catch((err) => console.log(err));
   };
   return (
     <div id="LoginPage">
-      {/* onClick={handleSignUp} */}
-      <Button variant="contained" color="secondary">
+      <Button variant="contained" color="secondary" onClick={handleSignUp}>
         Sign Up
       </Button>
       <form id="LoginForm" onSubmit={handleSubmit}>
         <TextField
-          id="emailLogin"
+          id="email-login"
           label="email"
           name="email"
           onChange={handleEmail}
         />
         <br></br>
         <TextField
-          id="passwordLogin"
+          id="password-login"
           type="password"
           label="password"
           name="password"

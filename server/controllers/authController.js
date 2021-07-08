@@ -42,7 +42,7 @@ authController.login = (req, res, next) => {
         email,
         isLoggedIn: true,
       };
-
+      console.log("compare hash", compareHash);
       // subject to change because of encryption
       return compareHash
         ? next()
@@ -74,7 +74,7 @@ authController.createUser = async (req, res, next) => {
   const query = `INSERT INTO users 
   (username, password, email, first_name, last_name)
   VALUES($1, $2, $3, $4, $5)
-  RETURNING username, email, first_name, last_name;`;
+  RETURNING _id, username, email, first_name, last_name;`;
 
   // try:
   try {
@@ -82,12 +82,6 @@ authController.createUser = async (req, res, next) => {
     const result = await db.query(query, params);
 
     // on SUCCESS, pass to next middleware w/ success message
-    // {
-    //     "username": "Squirtle",
-    //     "email": "zenigame@pokemon.com",
-    //     "first_name": "Squirt",
-    //     "last_name": "Turtle"
-    // }
     const newUser = result.rows[0];
     res.locals.user = newUser;
     return next();

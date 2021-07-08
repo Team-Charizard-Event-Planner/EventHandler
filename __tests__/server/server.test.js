@@ -3,7 +3,7 @@ const request = require('supertest');
 
 const server = 'http://localhost:3000';
 
-describe('route integration', () => {
+xdescribe('route integration', () => {
   describe('/', () => {
     describe('GET', () => {
       test('responds with index.html and status 200', () => {

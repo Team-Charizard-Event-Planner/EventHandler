@@ -27,7 +27,7 @@ router.post('/login',
 
 // do we want a separate route for just JWT verification?
 router.post('/verify',
-  // authController.verifyJWT,
+  // authController.verifyCookie,
   (req, res) => {
     return res.status(200).json('verified');
   }

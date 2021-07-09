@@ -13,7 +13,7 @@ const EventHeader = (props) => {
   };
   const handleHome = (e) => {
     e.preventDefault();
-    history.push("/events");
+    history.push("/event");
   };
   return (
     <div>

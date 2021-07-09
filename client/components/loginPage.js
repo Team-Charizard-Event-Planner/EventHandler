@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Button, TextField } from "@material-ui/core";
+// import * from "../../style.css"
+
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -14,7 +16,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      history.push("/events");
+      history.push("/event");
     }
   }, [isLoggedIn]);
 
@@ -55,9 +57,7 @@ const LoginPage = () => {
   };
   return (
     <div id="LoginPage">
-      <Button variant="contained" color="secondary" onClick={handleSignUp}>
-        Sign Up
-      </Button>
+      <h1>EVENT HANDLER</h1>
       <form id="LoginForm" onSubmit={handleSubmit}>
         <TextField
           id="email-login"
@@ -74,10 +74,13 @@ const LoginPage = () => {
           onChange={handlePassword}
         />
         <br></br>
-        <Button type="submit" variant="contained" color="primary">
+        <Button id="login-button" type="submit" variant="contained" color="primary">
           Login
         </Button>
       </form>
+      <Button id="signup-button" variant="contained" color="secondary" onClick={handleSignUp}>
+        Sign Up
+      </Button>
     </div>
   );
 };

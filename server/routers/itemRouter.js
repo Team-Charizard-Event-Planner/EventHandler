@@ -8,6 +8,7 @@ const router = express.Router();
 router.get('/:event_id',
   itemController.getByEvent,
   (req, res) => {
+    console.log('res.locals.items',res.locals)
     return res.status(200).json(res.locals.items);
   }
 );

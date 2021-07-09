@@ -57,14 +57,15 @@ attendeeController.addUserAfterCreate = (req, res, next) => {
 
 // adds user to an event
 attendeeController.addAttendee = (req, res, next) => {
-  const { event_id, user_id, isHost } = req.body;
+  const { event_id, isHost } = req.body;
+  const { _id } = res.locals.user;
 
   const query = `INSERT INTO attendees
   (event_id, user_id, is_host)
   VALUES ($1, $2, $3)
   RETURNING event_id, user_id, is_host;`;
 
-  const params = [event_id, user_id, isHost];
+  const params = [event_id, _id, isHost];
 
   db.query(query, params)
     .then((data) => {

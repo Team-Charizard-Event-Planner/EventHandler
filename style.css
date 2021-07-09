@@ -1,0 +1,23 @@
+#LoginPage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.LoginPage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#signup-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#login-button {
+  display: flex;
+  align-items: center;
+  justify-content: center
+}

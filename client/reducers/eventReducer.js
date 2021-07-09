@@ -18,7 +18,7 @@ const eventReducer = (state = initialState, action) => {
   let itemId;
   let userId;
   let eventDetails;
-  let attendee;
+  let newAttendee;
   let attendeeId;
   let eventArray;
   let newEventIndexAndId;
@@ -35,15 +35,19 @@ const eventReducer = (state = initialState, action) => {
     case types.DELETE_ITEM:
       itemId = action.payload;
       // declare an array equal to the current state value
+      const newItem = state.itemArray.filter(
+        (element) => {
+          return element._id.toString() !== itemId.toString()
+        }
+      )
       return {
         ...state,
-        itemArray: state.itemArray.filter((element) => element._id !== itemId),
+        itemArray: newItem,
       };
     case types.IS_CLAIMED:
-      userId = action.payload;
       return {
         ...state,
-        isClaimed: userId,
+        itemArray: action.payload,
       };
     case types.EDIT_EVENT:
       eventDetails = action.payload;
@@ -54,19 +58,25 @@ const eventReducer = (state = initialState, action) => {
         date: eventDetails.date,
       };
     case types.ADD_ATTENDEE:
-      attendee = action.payload;
+      newAttendee = action.payload.user;
+      newAttendee.is_host = action.payload.host.is_host
+      newAttendee.user_id = action.payload.host.user_id
+      console.log([...state.attendeeArray, newAttendee]);
       return {
         ...state,
-        attendeeArray: [...state.attendeeArray, attendee],
+        attendeeArray: [...state.attendeeArray, newAttendee],
       };
     case types.DELETE_ATTENDEE:
       attendeeId = action.payload;
+      const newArray = state.attendeeArray.filter(
+        (element) => {
+          return element.user_id.toString() !== attendeeId.toString()
+        }
+      )
       return {
         ...state,
         // declare an array equal to the current state value
-        attendeeArray: state.attendeeArray.filter(
-          (element) => element._id !== attendeeId
-        ),
+        attendeeArray: newArray,
       };
     case types.GET_EVENTS:
       eventArray = action.payload;
@@ -92,7 +102,7 @@ const eventReducer = (state = initialState, action) => {
         attendeeArray: getAttendees,
       };
     case types.GET_ITEMS:
-      getAttendees = action.payload;
+      getItems = action.payload;
       return {
         ...state,
         itemArray: getItems,

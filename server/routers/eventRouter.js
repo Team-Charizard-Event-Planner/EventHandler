@@ -6,7 +6,7 @@ const itemController = require('../controllers/itemController');
 const router = express.Router();
 
 // get all events a user has been invited to
-router.get("/userID/:userID", eventController.getEvents, (req, res) => {
+router.get("/userID/:user_id", eventController.getEvents, (req, res) => {
   return res.status(200).json(res.locals.events);
 });
 

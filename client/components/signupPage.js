@@ -9,7 +9,7 @@ const SignupPage = () => {
   const isLoggedIn = useSelector((state) => state.users.loggedIn);
   useEffect(() => {
     if (isLoggedIn) {
-      history.push("/events");
+      history.push("/event");
     }
   }, [isLoggedIn]);
 
@@ -51,9 +51,7 @@ const SignupPage = () => {
 
   return (
     <div id="SignupPage">
-      <Button variant="contained" color="secondary" onClick={handleBackToLogin}>
-        Back to Login
-      </Button>
+      <h1>EVENT HANDLER</h1>
       <form id="SignupForm" onSubmit={handleSubmit}>
         <TextField
           id="user-signup"
@@ -95,6 +93,9 @@ const SignupPage = () => {
           Sign Up
         </Button>
       </form>
+      <Button variant="contained" color="secondary" onClick={handleBackToLogin}>
+        Back to Login
+      </Button>
     </div>
   );
 };

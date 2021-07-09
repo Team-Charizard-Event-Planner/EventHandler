@@ -5,14 +5,14 @@ export const addItem = (item) => ({
   payload: item,
 });
 
-export const deleteItem = (item) => ({
+export const deleteItem = (itemId) => ({
   type: types.DELETE_ITEM,
-  payload: item._id,
+  payload: itemId,
 });
 
 export const isClaimed = (userObj) => ({
   type: types.IS_CLAIMED,
-  payload: userObj._id,
+  payload: userObj,
 });
 
 export const editEvent = (newTitle, newDescription, newDate) => ({
@@ -20,14 +20,14 @@ export const editEvent = (newTitle, newDescription, newDate) => ({
   payload: { title: newTitle, description: newDescription, date: newDate },
 });
 
-export const addAttendee = (attendee) => ({
+export const addAttendee = (attendeeData) => ({
   type: types.ADD_ATTENDEE,
-  payload: attendee,
+  payload: attendeeData,
 });
 
-export const deleteAttendee = (attendee) => ({
+export const deleteAttendee = (attendeeId) => ({
   type: types.DELETE_ATTENDEE,
-  payload: attendee.user_id,
+  payload: attendeeId,
 });
 
 export const userData = (userObj) => ({
@@ -47,4 +47,9 @@ export const getEvents = (eventArray) => ({
 export const getEventIndexAndId = (eventInfo) => ({
   type: types.EVENT_INDEX_ID,
   payload: eventInfo,
+});
+
+export const getItems = (itemArray) => ({
+  type: types.GET_ITEMS,
+  payload: itemArray,
 });

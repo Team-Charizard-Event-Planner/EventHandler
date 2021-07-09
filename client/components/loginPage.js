@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Button, TextField } from "@material-ui/core";
+// import * from "../../style.css"
+
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -14,7 +16,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      history.push("/events");
+      history.push("/event");
     }
   }, [isLoggedIn]);
 
@@ -50,28 +52,12 @@ const LoginPage = () => {
       })
       .then((data) => {
         dispatch({ type: "USER_DATA", payload: data });
-        // console.log("what is this?", data);
-        // if (data === "Logging in") console.log("success");
-        //   else {
-        //     fetch("/auth/verify", {
-        //       method: "POST",
-        //       headers: {
-        //         "Content-Type": "application/json",
-        //       },
-        //       //set state for username or first name in redux
-        //       body: JSON.stringify({}),
-        //     });
-        //   }
-        // })
-        // .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
   };
   return (
     <div id="LoginPage">
-      <Button variant="contained" color="secondary" onClick={handleSignUp}>
-        Sign Up
-      </Button>
+      <h1>EVENT HANDLER</h1>
       <form id="LoginForm" onSubmit={handleSubmit}>
         <TextField
           id="email-login"
@@ -87,12 +73,14 @@ const LoginPage = () => {
           name="password"
           onChange={handlePassword}
         />
-
         <br></br>
-        <Button type="submit" variant="contained" color="primary">
+        <Button id="login-button" type="submit" variant="contained" color="primary">
           Login
         </Button>
       </form>
+      <Button id="signup-button" variant="contained" color="secondary" onClick={handleSignUp}>
+        Sign Up
+      </Button>
     </div>
   );
 };

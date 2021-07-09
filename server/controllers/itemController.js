@@ -4,9 +4,9 @@ const itemController = {};
 
 // GET ALL ITEMS FOR EVENT
 itemController.getByEvent = (req, res, next) => {
-  const event_id = res.locals.event ? res.locals.event._id : req.params.event_id;
+  const event_id = req.params.event_id ? req.params.event_id : res.locals.event._id;
   const params = [event_id];
-
+  console.log(event_id)
   const query = `SELECT i.*, u.username
   FROM items i
   LEFT OUTER JOIN users u ON i.user_id = u._id

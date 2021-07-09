@@ -11,3 +11,4 @@ export const USER_LOGOUT = "USER_LOGOUT";
 export const GET_EVENTS = "GET_EVENTS";
 export const EVENT_INDEX_ID = "EVENT_INDEX_ID";
 export const GET_ATTENDEES = "GET_ATTENDEES";
+export const GET_ITEMS = "GET_ITEMS";

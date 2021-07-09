@@ -15,8 +15,8 @@ router.get('/:event_id',
 
 // add attendee to event "invite"
 router.post('/',
+  userController.getByUsername,
   attendeeController.addAttendee,
-  userController.getByID,
   (req, res) => {
     return res.status(200).json(res.locals);
   }
